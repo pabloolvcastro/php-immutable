@@ -25,7 +25,7 @@ abstract class ImmutableBuilder {
 		return $this->attributes;
 	}
 
-	protected function setAttribute(string $attributeName, $attributeValue): void {
+	public final function __set(string $attributeName, $attributeValue): void {
 		$this->attributes[$attributeName] = $attributeValue;
 	}
 }
