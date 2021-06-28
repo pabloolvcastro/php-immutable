@@ -33,12 +33,24 @@ class ImmutableBuilderTest extends TestCase {
 		$builder = ImmutableBuilderExample::getBuilder();
 
 		$expectedAttributeValue = 'value';
-		$builder->withAttribute($expectedAttributeValue);
+		$builder->attribute = $expectedAttributeValue ;
 
 		$actual = $builder->build();
 
 		$this->assertInstanceOf(ImmutableObjectExample::class, $actual);
 		$this->assertInstanceOf($builder->getObjetType(), $actual);
 		$this->assertEquals($expectedAttributeValue, $actual->getAttribute());
+	}
+
+	public function testImmutableBuilderBuild_hasPropertyExposedViaMagicSet() {
+		$builder = ImmutableBuilderExample::getBuilder();
+
+		$propertyName = 'attribute';
+		$expectedAttributeValue = 'value';
+		$builder->$propertyName = $expectedAttributeValue;
+		$builderAttributes = $builder->getAttributes();
+
+		$this->assertArrayHasKey($propertyName,$builderAttributes);
+		$this->assertEquals($expectedAttributeValue,$builderAttributes[$propertyName]);
 	}
 }
